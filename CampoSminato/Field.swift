@@ -109,7 +109,7 @@ class Field: NSObject {
         var x = positionIndex?.section ?? 0
         var y = positionIndex?.row ?? 0
         
-        if position.rawValue & PositionMask.North != 0 {
+        if (position.rawValue & PositionMask.North) != 0 {
             y -= 1
         }
         if position.rawValue & PositionMask.South != 0  {
@@ -121,8 +121,10 @@ class Field: NSObject {
         if position.rawValue & PositionMask.West != 0  {
             x -= 1
         }
-        if (x > 0 && x < width - 1) && (y > 0 && y < height - 1) {
-            let result = matrix[x][y] // Flood to check.
+        var result : BoardCell
+        
+        if (x >= 0 && x < width) && (y >= 0 && y < height) {
+            result = matrix[x][y]! // Flood to check.
             return result
         }
         else { // Cancels if the index is out of bounds.
@@ -130,28 +132,59 @@ class Field: NSObject {
         }
     }
     
+    func tapCellAtIndexPath(path: IndexPath){
+        //User tap events
+        
+        let selectedCell = boardCell(at: path)
+        expandFill(selectedCell)
+        
+        if (selectedCell?.status == BoardCell.BoardCellStatus.cellBomb){
+            self.delegate?.userFindBomb(at: path)
+            self.delegate?.willLose()
+            
+            NotificationCenter.default.post(name: NSNotification.Name("UserLoseNotification"), object: nil)
+
+        }else if(selectedCell?.status == BoardCell.BoardCellStatus.cellUnknown){
+            selectedCell?.status = BoardCell.BoardCellStatus.cellUncovered
+            self.delegate?.boardCell(selectedCell, didBecomeDiscoveredAt: path)
+        }
+    }
+
+    
     // Expand uncovered cells along main directions
     // Core recursive Algorithm for MineSweeper:
     // You start at some position in a 2D Grid [x,y], then look in all directions and fill them if you can
     // If (x,y) can't be filled, return.
     func expandFill(_ startingCell: BoardCell?) {
-        if startingCell?.isFillable() != nil {
+        if let test = startingCell{
+        if (startingCell!.isFillable()) {
             self.remainingCells = remainingCells - 1
             startingCell?.status = BoardCell.BoardCellStatus.cellUncovered
-            delegate!.boardCell(startingCell, didBecomeDiscoveredAt: startingCell?.positionInBoard)
+            delegate!.boardCell(startingCell, didBecomeDiscoveredAt: startingCell!.positionInBoard)
             if startingCell?.adiacentBombs == 0 {
                 expandFill(cell(atPostionMask: Field.PositionMask(rawValue: PositionMask.North), respectTo: startingCell))
                 expandFill(cell(atPostionMask: Field.PositionMask(rawValue: PositionMask.South), respectTo: startingCell))
                 expandFill(cell(atPostionMask: Field.PositionMask(rawValue: PositionMask.West), respectTo: startingCell))
                 expandFill(cell(atPostionMask: Field.PositionMask(rawValue: PositionMask.East), respectTo: startingCell))
             } else {
+                // adiacent bombs
                 return
             }
         } else {
+            // isAbomb or already seen
             return
+            }
         }
     }
 }
+
+
+extension Collection where Indices.Iterator.Element == Index {
+    subscript (safe index: Index) -> Iterator.Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
 
 
 protocol BoardDelegate: NSObjectProtocol {
@@ -222,4 +255,6 @@ class BoardCell: NSObject {
         }
         return true
     }
+    
+    
 }

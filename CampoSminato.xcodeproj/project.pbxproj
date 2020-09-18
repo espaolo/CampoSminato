@@ -124,6 +124,8 @@
 			dependencies = (
 			);
 			name = CampoSminato;
+			packageProductDependencies = (
+			);
 			productName = CampoSminato;
 			productReference = 84A11C2F250AD21F0060A0E0 /* CampoSminato.app */;
 			productType = "com.apple.product-type.application";
@@ -174,6 +176,8 @@
 				Base,
 			);
 			mainGroup = 84A11C26250AD21F0060A0E0;
+			packageReferences = (
+			);
 			productRefGroup = 84A11C30250AD21F0060A0E0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

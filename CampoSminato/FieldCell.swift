@@ -11,11 +11,11 @@ import UIKit
 
 class FieldCell: UICollectionViewCell {
     var adiacentBombsCount: Int = 0
-    var status: UIColor
-    var discovered: Bool
-    let bomb: Bool
-    var contentVisible: Bool
-    let contentCellLabel: UILabel
+    var status: UIColor = .darkGray
+    var discovered: Bool = false
+    let bomb: Bool = false
+    var contentVisible: Bool = true
+    var contentCellLabel: UILabel = UILabel()
 
     
     override init(frame: CGRect) {
@@ -31,10 +31,14 @@ class FieldCell: UICollectionViewCell {
         contentCellLabel.backgroundColor = .clear
         addSubview(contentCellLabel)
         setContentVisible(contentVisible: false)
-
-        
     }
 
+    override func prepareForReuse() {
+        setNeedsLayout()
+        super.prepareForReuse()
+    }
+
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
