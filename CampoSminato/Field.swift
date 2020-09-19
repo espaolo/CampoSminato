@@ -39,6 +39,7 @@ class Field: NSObject {
     // Init the Field and assign a Matrix of cells unknowned
     init(width: Int, height: Int) {
         super.init()
+        matrix = [[BoardCell?]]()
         self.height = height
         self.width = width
         self.remainingCells = width * height
@@ -158,7 +159,7 @@ class Field: NSObject {
     func expandFill(_ startingCell: BoardCell?) {
         if let test = startingCell{
         if (startingCell!.isFillable()) {
-            self.remainingCells = remainingCells - 1
+            setRemainingCells(remainingCells - 1)
             startingCell?.status = BoardCell.BoardCellStatus.cellUncovered
             delegate!.boardCell(startingCell, didBecomeDiscoveredAt: startingCell!.positionInBoard)
             if startingCell?.adiacentBombs == 0 {

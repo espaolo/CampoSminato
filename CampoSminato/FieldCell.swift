@@ -14,6 +14,7 @@ class FieldCell: UICollectionViewCell {
     var status: UIColor = .darkGray
     var discovered: Bool = false
     let bomb: Bool = false
+    var unknown: Bool = true
     var contentVisible: Bool = true
     var contentCellLabel: UILabel = UILabel()
 
@@ -23,12 +24,11 @@ class FieldCell: UICollectionViewCell {
         
         adiacentBombsCount = 0;
         setUnknown()
-        
+        contentView.backgroundColor = .clear
         // Number that display the adiacent bombs
         contentCellLabel = UILabel()
         contentCellLabel.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
         contentCellLabel.textAlignment = .center
-        contentCellLabel.backgroundColor = .clear
         addSubview(contentCellLabel)
         setContentVisible(contentVisible: false)
     }
@@ -62,7 +62,8 @@ class FieldCell: UICollectionViewCell {
     
     func setDiscovered(discovered: Bool){
         if(discovered){
-            // here show numbers
+            // the numbers
+            unknown = false
             self.backgroundColor = .lightGray
             self.isUserInteractionEnabled = false;
             status = self.backgroundColor!
