@@ -5,6 +5,11 @@
 //  Created by Paolo Esposito on 15/09/2020.
 //  Copyright © 2020 Paolo Esposito. All rights reserved.
 //
+//  This is the main ViewController for the Game:
+//
+//  It includes a collectionView with the cells that are the game boxes
+//  Implements the discovery-delegate of the new cells, and the victory/defeat events.
+
 
 import Foundation
 import UIKit
@@ -18,9 +23,8 @@ class GameViewController : UIViewController, BoardDelegate, UICollectionViewDele
     var secondLabel = UILabel()
     var timer: Timer? = nil
     var count: Int = 0 //countdown
-
-
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //Reset Board and timer
@@ -30,7 +34,9 @@ class GameViewController : UIViewController, BoardDelegate, UICollectionViewDele
         field.insertBombs(15)
         self.timer?.invalidate()
         self.timer = nil
-
+        self.title = "New Game"
+        
+        //Views Layout
         let view = UIView()
         view.backgroundColor = .clear
         field.delegate = self
@@ -44,13 +50,13 @@ class GameViewController : UIViewController, BoardDelegate, UICollectionViewDele
         let secondFrame = CGRect(x: 8, y: 0, width: 80, height: navigationBar!.frame.height)
         firstLabel = UILabel(frame: firstFrame)
         secondLabel = UILabel(frame: secondFrame)
-
+        
         firstLabel.text = "Score: 0"
         secondLabel.text = ""
         navigationBar!.addSubview(firstLabel)
         navigationBar!.addSubview(secondLabel)
-
-
+        
+        
         myCollectionView?.register(FieldCell.self, forCellWithReuseIdentifier: "MyCell")
         myCollectionView?.backgroundColor = UIColor.white
         myCollectionView?.dataSource = self
@@ -58,7 +64,8 @@ class GameViewController : UIViewController, BoardDelegate, UICollectionViewDele
         view.addSubview(myCollectionView!)
         
         self.view = view
-//        self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(tickTimer), userInfo: nil, repeats: true)
+        
+        // Countdown Start
         self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             if(self.count < 1) {
                 timer.invalidate()
@@ -71,10 +78,7 @@ class GameViewController : UIViewController, BoardDelegate, UICollectionViewDele
                 self.count -= 1
                 self.secondLabel.text = String(self.count)
             }
-
         }
-
-
     }
     
     // MARK: - Collection View Delegates
@@ -104,10 +108,7 @@ class GameViewController : UIViewController, BoardDelegate, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Selected Cell: \(indexPath.section), \(indexPath.row)")
-        
         field.tapCellAtIndexPath(path: indexPath)
-
-        
     }
     
     func bombs(atIndexPaths indexPaths: [IndexPath], makeVisible visible: Bool) {
@@ -128,16 +129,14 @@ class GameViewController : UIViewController, BoardDelegate, UICollectionViewDele
             }
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
-    
-    
     
     
     // MARK: - Board Delegates
@@ -157,7 +156,6 @@ class GameViewController : UIViewController, BoardDelegate, UICollectionViewDele
     
     func userFindBomb(at indexPath: IndexPath?) {
         (collectionView(myCollectionView!, cellForItemAt: indexPath!) as! FieldCell).contentView.backgroundColor = .red
-        
     }
     
     func willWin() {

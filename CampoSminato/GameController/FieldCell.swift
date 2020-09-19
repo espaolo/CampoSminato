@@ -5,6 +5,12 @@
 //  Created by Paolo Esposito on 16/09/2020.
 //  Copyright © 2020 Paolo Esposito. All rights reserved.
 //
+//  This is the class for the GameViewController Cell:
+//
+//  It includes a label for counting adiacent bombs.
+//  Inherits the peculiarities of the data model.
+//  It manages the cells background colors, based on the state of the field.
+
 
 import Foundation
 import UIKit
@@ -86,9 +92,5 @@ class FieldCell: UICollectionViewCell {
         self.contentVisible = contentVisible
         self.contentCellLabel.isHidden = !contentVisible
     }
-
-
-
-
 
 }

@@ -4,7 +4,12 @@
 //
 //  Created by Paolo Esposito on 10/09/2020.
 //  Copyright © 2020 Paolo Esposito. All rights reserved.
+//  
+//  This is the main data model for the Game:
 //
+//  It implements the main properties for the state of the field and of the individual boxes.
+//  The core algorithm for the game (floodFill) is contained here.
+//  The bitwise position masks for 8-neighbourhood follow a cardinal directions approach (NSWE)
 
 import Foundation
 
@@ -214,7 +219,7 @@ class BoardCell: NSObject {
     enum BoardCellStatus {
         case cellUnknown // Not yet discoverd
         case cellUncovered // Uncovered
-        case cellBomb
+        case cellBomb // Bomb
     }
     
     //  The status of the cell

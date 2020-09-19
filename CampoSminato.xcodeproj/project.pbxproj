@@ -64,6 +64,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		845E001C25160B37006415D5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				84A11C54250AD24E0060A0E0 /* Field.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		845E001D25160B5B006415D5 /* GameController */ = {
+			isa = PBXGroup;
+			children = (
+				845E001525103061006415D5 /* GameViewController.swift */,
+				845E0017251188C1006415D5 /* FieldCell.swift */,
+			);
+			path = GameController;
+			sourceTree = "<group>";
+		};
 		84A11C26250AD21F0060A0E0 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +102,8 @@
 		84A11C31250AD21F0060A0E0 /* CampoSminato */ = {
 			isa = PBXGroup;
 			children = (
+				845E001D25160B5B006415D5 /* GameController */,
+				845E001C25160B37006415D5 /* Model */,
 				84A11C32250AD21F0060A0E0 /* AppDelegate.swift */,
 				84A11C34250AD21F0060A0E0 /* SceneDelegate.swift */,
 				84A11C36250AD21F0060A0E0 /* ViewController.swift */,
@@ -92,9 +111,6 @@
 				84A11C3B250AD2220060A0E0 /* Assets.xcassets */,
 				84A11C3D250AD2220060A0E0 /* LaunchScreen.storyboard */,
 				84A11C40250AD2220060A0E0 /* Info.plist */,
-				84A11C54250AD24E0060A0E0 /* Field.swift */,
-				845E001525103061006415D5 /* GameViewController.swift */,
-				845E0017251188C1006415D5 /* FieldCell.swift */,
 			);
 			path = CampoSminato;
 			sourceTree = "<group>";

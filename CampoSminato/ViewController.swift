@@ -12,13 +12,11 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-//        let field = Field.init(width: 5, height: 5)
-//        field.insertBombs(1)
-//        print (field.numberOfBombs)
+        //        Testing the ViewController.
+        //        let field = Field.init(width: 5, height: 5)
+        //        field.insertBombs(1)
+        //        print (field.numberOfBombs)
         
     }
-
-
 }
 
